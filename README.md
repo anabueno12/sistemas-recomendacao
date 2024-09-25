@@ -60,16 +60,55 @@ Conclusão
 Este projeto demonstra como o K-Means pode ser aplicado para criar um sistema de recomendação de filmes. Ao agrupar usuários com gostos semelhantes, conseguimos oferecer sugestões que têm mais chances de agradar. Essa abordagem não só melhora a experiência do usuário, mas também aumenta o tempo que eles passam na plataforma, potencialmente elevando a satisfação e a lealdade.
 
 PASSO A PASSO
-1° Pimeiro coloca todas as blibiotecas no COLAB e monta o "projetinho" do que deseja saber como por exemplo no nosso que foi sobre uma lista de filmes.
-2° Testar cada parte do projeto.
-3° È juntar o COLAB com o GIT HUB.
-4° Criar uma pasta no GIT colocando o nome da pasta, o MIT LICENCE e autoriza.
-5° Copiar o código do GiT e ir na pasta do computador e colocar CMD.
-6° Nessa parte que vai abrir cologar o GIT CLONE e colar o código que serve para importar a pasta para o visual.
-7° No visual studio achar a pasta e também colocar a pasta do REDME que é a pasta de pyton.
-8° Dar o add .
-    O commit -m ""
-	Modificar a parte de cima e dar o CTRL S
-9° Dar o segundo commit
-10°  O terceiro commit  sera no REDME onde colocara o que entendeu do pojeto.
-11° O ultimo passo é o push origin main que ira salvar todo o seu pojeto no GIT.
+1. Preparação dos Dados
+Definir o Conjunto de Dados: Crie uma matriz onde cada linha representa um objeto (neste caso, um usuário) e cada coluna representa uma característica (neste caso, filmes assistidos).
+
+Exemplo:
+
+python
+Copiar código
+import numpy as np
+
+filmes_assistidos = np.array([
+    [1, 0, 0, 1, 1],
+    [1, 1, 0, 0, 0],
+    [0, 1, 1, 0, 1],
+    [0, 0, 1, 1, 0],
+    [1, 0, 1, 0, 1],
+    [0, 1, 0, 1, 0]
+])
+2. Escolher o Número de Clusters (K)
+Decidir quantos clusters você deseja: Esse número deve ser definido antes da execução do algoritmo. É comum fazer testes com diferentes valores de K para ver qual gera os melhores resultados.
+
+python
+Copiar código
+num_cluster = 2  # Definindo o número de clusters
+3. Inicializar Centróides
+Selecionar os centróides iniciais: O algoritmo escolhe K pontos aleatórios do conjunto de dados como centróides iniciais.
+
+python
+Copiar código
+from sklearn.cluster import KMeans
+
+kmeans = KMeans(n_clusters=num_cluster, random_state=0)
+4. Atribuir Cada Ponto ao Cluster Mais Próximo
+Calcular a distância: Para cada ponto de dados, calcule a distância até cada centróide e atribua o ponto ao cluster correspondente ao centróide mais próximo.
+
+python
+Copiar código
+kmeans.fit(filmes_assistidos)
+grupos_indice = kmeans.predict(filmes_assistidos)
+5. Atualizar os Centróides
+Recalcular os centróides: Após a atribuição, os centróides são recalculados como a média dos pontos atribuídos a cada cluster.
+6. Repetir o Processo
+Iterar até a convergência: O processo de atribuição e atualização dos centróides é repetido até que os centróides não mudem mais ou até que um número máximo de iterações seja alcançado.
+7. Analisar os Resultados
+Exibir os clusters: Após a convergência, você pode analisar a qual cluster cada ponto pertence.
+
+python
+Copiar código
+print("Usuário pertence ao seguinte grupo:")
+for i, cluster in enumerate(grupos_indice):
+    print(f"Usuário {i + 1} pertence ao grupo {cluster + 1}")
+Conclusão
+O K-Means é um método poderoso para agrupamento e pode ser utilizado em diversas aplicações, incluindo sistemas de recomendação. Ao seguir esses passos, você pode implementar o K-Means para classificar usuários com base em suas preferências de filmes.
