@@ -11,15 +11,20 @@ Original file is located at
 import numpy as np
 from sklearn.cluster import KMeans
 
-#matriz com os filmes assistidos
-filmes_assistidos = np.array([
-     [1, 0, 0, 1, 1],
-     [1, 1, 0, 0, 0],
-     [0, 1, 1, 0, 1],
-     [0, 0, 1, 1, 0],
-     [1, 0, 1, 0, 1],
-     [0, 1, 0, 1, 0]
-])
+import pandas as pd
+# 1° Passo: Especificar o caminho do arquivo 
+
+caminho_arquivo = '/content/filmes_100_usuarios.csv'
+
+#2° Passo: Ler o CSV usando pandas
+df = pd.read_csv(caminho_arquivo)
+
+# Exibir o cabeçalho do arquivo para verificar se foi lido corretamente
+print(df.head())
+
+                 
+#Matriz de filmes assistidos
+mv_rating  = df.drop(columns=["Unnamed: 0"]).values
 
 #definindo numeros de cluster(grupos)
 num_cluster = 2
@@ -70,7 +75,7 @@ def recomendar_filme(filmes, filmes_assistidos, grupos_indice):
   return sorted(filmes_recomendados)
 
 #exemplo de uso da função recomendar_filmes
-filmes_assistidos_usuario = [1, 0, 1, 0] #vetor de filme
+filmes_assistidos_usuario = [1, 0, 1, 0, 0, 1, 0, 1, 1, 0] #vetor de filme
 #assistidos (por exemplo, assistiu aos filmes 1 e 3)
 filmes_recomendados = recomendar_filme(filmes_assistidos_usuario, filmes_assistidos, grupos_indice)
 
